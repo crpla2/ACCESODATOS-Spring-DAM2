@@ -32,3 +32,34 @@ public class MainController {
 			return userRepository.findAll();
 		}
 	}
+/*
+ * https://spring.io/guides/gs/accessing-data-mysql/
+ * 
+ * -----------------------------------------
+ * 
+ * create database db_example; -- Creates the new database create user
+ * 'springuser'@'%' identified by 'ThePassword'; -- Creates the user grant all
+ * on db_example.* to 'springuser'@'%'; -- Gives all privileges to the new user
+ * on the newly created database
+ * 
+ * ------------------------------------------- revisar el fichero
+ * application.properties
+ * 
+ * spring.jpa.hibernate.ddl-auto=update
+ * spring.datasource.url=jdbc:mysql://localhost:3306/db_example?serverTimezone=
+ * Europe/Madrid ...
+ * spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+ * #spring.jpa.show-sql: true
+ * 
+ * --------------------------------------------
+ * 
+ * Corregir línea 18 de MainController.java Cambiar @PostMapping por @GetMapping
+ * 
+ * AÑADIR: 
+ * http://localhost:8080/demo/add?name=Alberto Carrera&email=alberto@guara.com 
+ * http://localhost:8080/demo/add?name=Luis Aldea&email=luis@guara.com 
+ * http://localhost:8080/demo/add?name=Belén Carrera&email=belen@guara.com
+ * 
+ * VER TODO:
+ * http://localhost:8080/demo/all
+ * */

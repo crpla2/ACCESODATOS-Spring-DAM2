@@ -7,7 +7,7 @@ public class passwordEncoder {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		 BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-		 String pass= passwordEncoder.encode("carloscarlos");
+		 String pass= passwordEncoder.encode("claseclase");
 		 System.out.println(pass);
 		 
 		 

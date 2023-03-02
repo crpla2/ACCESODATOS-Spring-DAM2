@@ -1,4 +1,4 @@
-package wm.web.security;
+package web.app.wbm.security;
 
 import java.util.Collection;
 
@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import web.app.wbm.model.entity.datos_personales;
+import web.app.wbm.model.entity.usuario_interno;
 import web.app.wbm.model.entity.usuario_web;
 
 public class CustomUserDetails implements UserDetails {
-	@Autowired
+	
 	private usuario_web user;
-	@Autowired
-	private datos_personales datosUser;
 	
 	public CustomUserDetails(usuario_web user) {
 		this.user = user;
@@ -54,8 +52,9 @@ public class CustomUserDetails implements UserDetails {
 		return true;
 	}
 	
-	public String getFullName() {
-		return user.getFirstName() + " " + user.getLastName();
+	public String getDni() {
+		return user.getDni();
 	}
+	
 
 }

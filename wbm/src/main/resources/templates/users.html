@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>List Users</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="">
+				<img th:src="@{/img/wmLogo.png}" id="imagen" alt="" width="30" height="30"
+					class="d-inline-block align-text-top">
+				<b>Talleres Fitipaldi</b>
+			</a>
+
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link " aria-current="page" th:href="@{/}">Inicio</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Reparaciones</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Vehículos</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" th:href="@{/users}">Datos personales</a>
+					</li>
+				</ul>
+			</div>
+
+
+			<form class="d-flex" th:action="@{/logout}" method="post">
+				<a class="navbar-brand" style="color:#FFFFF0">
+					Bienvenido <b><i>[[${#request.userPrincipal.principal.dni}]]</i></b>
+				</a>
+				<input class="btn btn-outline-danger" type="submit" value="Cerrar sesión" />
+			</form>
+
+		</div>
+	</nav>
+	<div class="container text-center">
+
+		<div>
+			<br>
+			<h1><b>Datos de acceso</b></h1>
+			<br>
+			<div>
+				<table class="table table-striped table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th>E-mail</th>
+							<th>DNI</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:object=" ${listUsers}">
+							
+							<td th:text="*{email}">E-mail</td>
+							<td th:text="*{dni}">DNI</td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="container">
+				<h1 class=" border border-success border-top-0 border-left-0 border-right-0">
+					<br>
+					<b>Datos Personales</b>
+					<br>
+				</h1>
+
+
+				<form>
+					<br>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>Nombre</b></label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>Apellido</b></label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>Email</b></label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" readonly />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<input type="submit" value="Crear Cliente" class="btn btn-primary" />
+						</div>
+					</div>
+
+				</form>
+			</div>
+</body>
+
+</html>

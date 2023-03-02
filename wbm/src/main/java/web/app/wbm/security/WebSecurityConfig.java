@@ -1,4 +1,4 @@
-package wm.web.security;
+package web.app.wbm.security;
 
 import javax.sql.DataSource;
 
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends  WebSecurityConfigurerAdapter  {
 	@Autowired
 	private DataSource dataSource;
 	
@@ -38,14 +38,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
+	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
-	@SuppressWarnings("deprecation")
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests()
-			.requestMatchers("/users").authenticated()
+		http.authorizeRequests()
+			.antMatchers("/users").authenticated()
 			.anyRequest().permitAll()
 			.and()
 			.formLogin()

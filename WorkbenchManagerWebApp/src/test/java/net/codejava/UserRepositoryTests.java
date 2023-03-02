@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import wm.web.entities.User;
+
 import wm.web.repositories.UserRepository;
 
 @DataJpaTest

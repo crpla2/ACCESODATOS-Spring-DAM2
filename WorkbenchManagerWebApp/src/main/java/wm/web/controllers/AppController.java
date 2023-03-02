@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import wm.web.entities.Datos;
 import wm.web.entities.User;
+import wm.web.entities.User2;
 import wm.web.repositories.UserRepository;
 
 @Controller

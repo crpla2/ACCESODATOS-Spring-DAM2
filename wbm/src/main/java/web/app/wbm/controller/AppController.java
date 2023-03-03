@@ -36,22 +36,32 @@ public class AppController {
 
 	@PostMapping("/process_register")
 	public String processRegister(usuario_web user) {
-	
+
 		if (datosRepo.existsById(user.getDni())) {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String encodedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encodedPassword);
-			if(userRepo.existsById(user.getDni())||userRepo.findByUsuario(user.getEmail())!=null) {
+			if (userRepo.existsById(user.getDni()) || userRepo.findByUsuario(user.getEmail()) != null) {
 				return "register_fail";
 			}
-				userRepo.save(user);
-			
-			
+			userRepo.save(user);
+
 			return "register_success";
-	} else {
+		} else {
 			return "register_fail";
 		}
 	}
+	/*
+	 * @GetMapping("/users") public String listUsers(Model model) { Object principal
+	 * = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	 * UserDetails userDetails = null; if (principal instanceof UserDetails) {
+	 * userDetails = (UserDetails) principal; } String userName =
+	 * userDetails.getUsername(); usuario_web listUsers =
+	 * userRepo.findByUsuario(userName); model.addAttribute("listUsers", listUsers);
+	 * 
+	 * datos_personales listDatos = datosRepo.findByDni(userName);
+	 * model.addAttribute("listDatos", listDatos); return "users"; }
+	 */
 
 	@GetMapping("/users")
 	public String listUsers(Model model) {
@@ -64,8 +74,21 @@ public class AppController {
 		usuario_web listUsers = userRepo.findByUsuario(userName);
 		model.addAttribute("listUsers", listUsers);
 		
-		datos_personales listDatos = datosRepo.findByDni(userName);
+		datos_personales listDatos = datosRepo.findByDni(listUsers.getDni());
 		model.addAttribute("listDatos", listDatos);
+		model.addAttribute("nombre",listDatos.getNombreCompleto());
+		
 		return "users";
+	}
+
+	@GetMapping("/UpdateDatos")
+	public String UpdateDatos(datos_personales user) {
+		datos_personales listDatos = datosRepo.findByDni(user.getDni());
+		listDatos.setTelefono(user.getTelefono());
+		user.setDireccion(user.getDireccion());
+		datosRepo.save(listDatos);
+
+		return "redirect:users";
+
 	}
 }

@@ -5,6 +5,7 @@
 	<meta charset="ISO-8859-1">
 	<title>List Users</title>
 	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
 	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
@@ -39,7 +40,7 @@
 					</li>
 				</ul>
 			</div>
-<!-- IF(NO ESTAMOS LOGUEADOS) -->
+			<!-- IF(NO ESTAMOS LOGUEADOS) -->
 			<a sec:authorize="!isAuthenticated()" class="btn btn-outline-success" role="button" aria-disabled="true"
 				href="/login"><b>Iniciar sesión</b>
 				<!--#49FF33--> <img src="/img/log-in.svg" alt="Bootstrap" width="32" height="32">
@@ -47,18 +48,18 @@
 			<!-- ELSE -->
 			<form sec:authorize="isAuthenticated()" class="d-flex">
 				<a class="navbar-brand" style="color:#FFFFF0">
-					Bienvenido <b><i>[[${#request.userPrincipal.principal.dni}]]</i></b>
+					Bienvenido <b><i>[[${nombre}]]</i></b>
 				</a>
 				<a class="btn btn-outline-danger" role="button" aria-disabled="true" href="/logout"><b>Cerrar sesión</b>
 					<!--#F54D4D--> <img src="/img/log-out.svg" alt="Bootstrap" width="32" height="32">
 				</a>
 			</form>
 
-			
+
 
 		</div>
 	</nav>
-	<div class="container text-center">
+	<div class="container text-center alert alert-warning" role="warning">
 
 		<div>
 			<br>
@@ -69,57 +70,70 @@
 					<thead class="thead-dark">
 						<tr>
 							<th>E-mail</th>
-							<th>DNI</th>
+							<th>Contraseña</th>
+							<th/>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:object=" ${listUsers}">
-							
+						<tr  th:object=" ${listUsers}">
+
 							<td th:text="*{email}">E-mail</td>
-							<td th:text="*{dni}">DNI</td>
-							
+							<td th:text="*{password}">Contraseña</td>
+							<td><input type="submit"  value="Cambiar contraseña" class="btn btn-warning" /></td>
+
 						</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<div class="container">
+			<div class="alert alert-info" role="info">
 				<h1 class=" border border-success border-top-0 border-left-0 border-right-0">
 					<br>
 					<b>Datos Personales</b>
 					<br>
 				</h1>
-
-
-				<form>
+				<form th:action="@{/UpdateDatos}" th:object="${listDatos}">
 					<br>
-					<div class="form-group row" th:object="${listDatos}">
+
+					<div class="form-group row">
 						<label class="col-sm-3 col-form-label"><b>Nombre</b></label>
 						<div class="col-sm-8">
-							<input type="text" th:text="*{nombre} "class="form-control" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label"><b>Apellido</b></label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label"><b>Email</b></label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" readonly />
-						</div>
-					</div>
+							<input type="text" th:field="*{nombre}" class="form-control" readonly />
 
-					<div class="form-group row">
-						<div class="col-sm-6">
-							<input type="submit" value="Crear Cliente" class="btn btn-primary" />
 						</div>
 					</div>
-
-				</form>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>Apellidos</b></label>
+						<div class="col-sm-8">
+							<input type="text" th:field="*{apellidos}" class="form-control" readonly />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>DNI</b></label>
+						<div class="col-sm-8">
+							<input type="text" th:field="*{dni}" class="form-control" readonly />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>Teléfono</b></label>
+						<div class="col-sm-8">
+							<input type="text" th:field="*{telefono}" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label"><b>Dirección</b></label>
+						<div class="col-sm-8">
+							<input type="text" th:field="*{direccion}" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<input type="submit"  value="Actualizar datos" class="btn btn-primary" />
+						</div>
+					</div>
 			</div>
+			</form>
+		</div>
 </body>
 
 </html>

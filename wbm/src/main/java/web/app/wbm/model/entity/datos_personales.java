@@ -27,7 +27,9 @@ public class datos_personales {
 	@Column(nullable = true)
 	private boolean es_cliente;
 	@OneToOne(mappedBy = "datos", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	
 	private usuario_web usuario;
 
+	public String getNombreCompleto() {
+		return nombre+" "+apellidos;
+	}
 }

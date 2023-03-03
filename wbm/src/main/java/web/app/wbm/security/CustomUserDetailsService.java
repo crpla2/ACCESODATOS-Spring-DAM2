@@ -6,17 +6,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import web.app.wbm.model.entity.usuario_web;
-import web.app.wbm.repository.UserRepository;
+import web.app.wbm.repository.UsuarioWebRepository;
 
 
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UsuarioWebRepository userRepo;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		usuario_web user = userRepo.findByEmail(username);
+		usuario_web user = userRepo.findByUsuario(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found");
 		}

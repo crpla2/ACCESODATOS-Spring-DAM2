@@ -39,14 +39,22 @@
 					</li>
 				</ul>
 			</div>
-
-
-			<form class="d-flex" th:action="@{/logout}" method="post">
+<!-- IF(NO ESTAMOS LOGUEADOS) -->
+			<a sec:authorize="!isAuthenticated()" class="btn btn-outline-success" role="button" aria-disabled="true"
+				href="/login"><b>Iniciar sesión</b>
+				<!--#49FF33--> <img src="/img/log-in.svg" alt="Bootstrap" width="32" height="32">
+			</a>
+			<!-- ELSE -->
+			<form sec:authorize="isAuthenticated()" class="d-flex">
 				<a class="navbar-brand" style="color:#FFFFF0">
 					Bienvenido <b><i>[[${#request.userPrincipal.principal.dni}]]</i></b>
 				</a>
-				<input class="btn btn-outline-danger" type="submit" value="Cerrar sesión" />
+				<a class="btn btn-outline-danger" role="button" aria-disabled="true" href="/logout"><b>Cerrar sesión</b>
+					<!--#F54D4D--> <img src="/img/log-out.svg" alt="Bootstrap" width="32" height="32">
+				</a>
 			</form>
+
+			
 
 		</div>
 	</nav>
@@ -85,10 +93,10 @@
 
 				<form>
 					<br>
-					<div class="form-group row">
+					<div class="form-group row" th:object="${listDatos}">
 						<label class="col-sm-3 col-form-label"><b>Nombre</b></label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" />
+							<input type="text" th:text="*{nombre} "class="form-control" />
 						</div>
 					</div>
 					<div class="form-group row">

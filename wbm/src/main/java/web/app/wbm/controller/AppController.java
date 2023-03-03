@@ -1,7 +1,5 @@
 package web.app.wbm.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,17 +8,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import web.app.wbm.model.entity.datos_personales;
 import web.app.wbm.model.entity.usuario_web;
-import web.app.wbm.repository.DatosRepository;
-import web.app.wbm.repository.UserRepository;
+import web.app.wbm.repository.DatosPersonalesRepository;
+import web.app.wbm.repository.UsuarioWebRepository;
 
 @Controller
 public class AppController {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UsuarioWebRepository userRepo;
 	@Autowired
-	private DatosRepository datosRepo;
+	private DatosPersonalesRepository datosRepo;
 
 	@GetMapping("")
 	public String viewHomePage() {
@@ -36,16 +36,21 @@ public class AppController {
 
 	@PostMapping("/process_register")
 	public String processRegister(usuario_web user) {
-	//	Optional<datos_personales> data = datosRepo.findById(user.getDni());
-	//	if (data.isPresent()) {
+	
+		if (datosRepo.existsById(user.getDni())) {
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			String encodedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encodedPassword);
-			userRepo.save(user);
+			if(userRepo.existsById(user.getDni())||userRepo.findByUsuario(user.getEmail())!=null) {
+				return "register_fail";
+			}
+				userRepo.save(user);
+			
+			
 			return "register_success";
-	//	} else {
-	//		return "register_fail";
-	//	}
+	} else {
+			return "register_fail";
+		}
 	}
 
 	@GetMapping("/users")
@@ -56,9 +61,11 @@ public class AppController {
 			userDetails = (UserDetails) principal;
 		}
 		String userName = userDetails.getUsername();
-		usuario_web listUsers = userRepo.findByEmail(userName);
+		usuario_web listUsers = userRepo.findByUsuario(userName);
 		model.addAttribute("listUsers", listUsers);
-
+		
+		datos_personales listDatos = datosRepo.findByDni(userName);
+		model.addAttribute("listDatos", listDatos);
 		return "users";
 	}
 }

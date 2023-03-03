@@ -37,13 +37,18 @@
 				</ul>
 			</div>
 			<!-- IF(NO ESTAMOS LOGUEADOS) -->
-			<a sec:authorize="!isAuthenticated()" class="btn btn-outline-success" role="button" aria-disabled="true" href="/login">Iniciar sesión</a>
+			<a sec:authorize="!isAuthenticated()" class="btn btn-outline-success" role="button" aria-disabled="true"
+				href="/login"><b>Iniciar sesión</b>
+				<!--#49FF33--> <img src="/img/log-in.svg" alt="Bootstrap" width="32" height="32">
+			</a>
 			<!-- ELSE -->
-			<form sec:authorize="isAuthenticated()" class="d-flex" th:action="@{/logout}" method="post">
+			<form sec:authorize="isAuthenticated()" class="d-flex">
 				<a class="navbar-brand" style="color:#FFFFF0">
 					Bienvenido <b><i>[[${#request.userPrincipal.principal.dni}]]</i></b>
 				</a>
-				<input class="btn btn-outline-danger" type="submit" value="Cerrar sesión" />
+				<a class="btn btn-outline-danger" role="button" aria-disabled="true" href="/logout"><b>Cerrar sesión</b>
+					<!--#F54D4D--> <img src="/img/log-out.svg" alt="Bootstrap" width="32" height="32">
+				</a>
 			</form>
 		</div>
 	</nav>

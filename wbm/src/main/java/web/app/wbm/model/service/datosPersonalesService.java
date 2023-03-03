@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 
 import web.app.wbm.model.entity.datos_personales;
-import web.app.wbm.repository.DatosRepository;
+import web.app.wbm.repository.DatosPersonalesRepository;
 
 @Service
 public class datosPersonalesService {
 	 @Autowired
-	    DatosRepository datosRepo;
+	    DatosPersonalesRepository datosRepo;
 
 	    public List<datos_personales> getList(){
 	        return datosRepo.findAll();
@@ -27,7 +27,7 @@ public class datosPersonalesService {
 	        datosRepo.save(datos);
 	    }
 	   
-	    public boolean existsProductoId(String id){
+	    public boolean existsCliente(String id){
 	        return datosRepo.existsById(id);
 	    }
 

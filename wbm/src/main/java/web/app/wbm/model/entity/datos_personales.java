@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.Data;
@@ -24,12 +23,12 @@ public class datos_personales {
 	private String direccion;
 	@Column(nullable = false, length = 9)
 	private String telefono;
-	@Column(nullable = true)
-	private boolean es_cliente;
+	@Column(nullable = false)
+	private boolean cliente;
 	@OneToOne(mappedBy = "datos", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private usuario_web usuario;
 
 	public String getNombreCompleto() {
-		return nombre+" "+apellidos;
+		return nombre + " " + apellidos;
 	}
 }

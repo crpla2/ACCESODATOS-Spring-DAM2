@@ -30,4 +30,6 @@ public class vehiculo {
 	private String modelo;
 	@Column( nullable= false, length = 4)
 	private String anio;
+	@Column( nullable= false)
+	private boolean alta;
 }
